@@ -16,3 +16,4 @@ Auxiliar os usuários a se organizarem, calculando estimativas de saída com bas
 ## Integrante
 - Renan de Lima Souza (RA: 2653392)
 - Hilion de Paula Hermsdorf (2638139)
+- Luiz Gabriel Alves da Silva, RA: (2640874)
