@@ -11,6 +11,7 @@ Auxiliar os usuários a se organizarem, calculando estimativas de saída com bas
 - Captura de geolocalização via GPS do dispositivo.
 - Gestão e persistência de compromissos utilizando `localStorage`.
 - Cálculo simulado/estimado de tempo de percurso com base na distância.
+- Sistema de Alarme de lembrete.
 - Monitoramento de rede Online/Offline.
 
 ## Integrante
