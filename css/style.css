@@ -83,7 +83,6 @@ button:hover {
   z-index: 1;
 }
 
-/* FIX: Permite rolar os resultados da barra de pesquisa no PC */
 .leaflet-control-geocoder-alternatives {
   max-height: 150px !important;
   overflow-y: auto !important;
