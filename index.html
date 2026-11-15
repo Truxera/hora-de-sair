@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hora de Sair</title>
+  <!-- CSS do Mapa e do plugin de Pesquisa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; padding: 0 10px;">
+      <h1>Hora de Sair</h1>
+      <button id="btn-tema" style="background: rgba(255,255,255,0.2); padding: 6px 12px; font-size: 0.85rem;">🌙 Tema</button>
+    </div>
+    <p id="status-conexao" style="margin-top: 5px;">Verificando rede...</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Novo Compromisso</h2>
+      <form id="form-compromisso">
+        <label for="titulo">Compromisso (Ex: Cabeleireiro)</label>
+        <input type="text" id="titulo" required placeholder="Ex: Corte de cabelo">
+
+        <label for="horario">Horário Marcado</label>
+        <input type="time" id="horario" required>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="button" id="btn-local" style="flex: 1;">1. Usar GPS (Origem)</button>
+          <button type="button" id="btn-limpar-mapa" style="background: #ef4444;">Limpar Mapa</button>
+        </div>
+        <p id="txt-origem">Sua origem: clique no mapa ou use o GPS.</p>
+
+        <label>2. Busque na lupa ou clique no mapa:</label>
+        <div id="mapa"></div>
+        <p id="info-mapa">💡 1º clique = Origem (Azul) | 2º clique ou Busca = Destino (Pino).</p>
+        <p id="txt-status-mapa" style="font-weight: bold; color: #4f46e5;"></p>
+
+        <button type="submit" class="btn-salvar">Salvar Compromisso</button>
+      </form>
+    </section>
+
+    <section>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h2 style="margin: 0;">Meus Compromissos</h2>
+        <button id="btn-apagar-todos" style="background: #dc2626; padding: 6px 10px; font-size: 0.8rem;">Apagar Todos</button>
+      </div>
+
+      <!-- Barra de busca para filtrar compromissos salvos -->
+      <input type="text" id="busca-compromisso" placeholder="🔍 Pesquisar compromisso salvo..." style="margin-bottom: 12px; width: 100%; box-sizing: border-box;">
+
+      <ul id="lista-compromissos"></ul>
+    </section>
+  </main>
+
+  <!-- Scripts do Mapa e Plugins -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

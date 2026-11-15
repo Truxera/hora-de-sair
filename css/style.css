@@ -1,0 +1,127 @@
+:root {
+  --bg-color: #f7f9fc;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --li-bg: #eef2ff;
+  --primary: #4f46e5;
+}
+
+body.dark-mode {
+  --bg-color: #111827;
+  --card-bg: #1f2937;
+  --text-color: #f9fafb;
+  --input-bg: #374151;
+  --input-border: #4b5563;
+  --li-bg: #374151;
+  --primary: #6366f1;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+}
+header {
+  background: var(--primary);
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
+main {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 12px;
+}
+section {
+  background: var(--card-bg);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+input, button {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  background: var(--input-bg);
+  color: var(--text-color);
+}
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover {
+  opacity: 0.9;
+}
+.btn-salvar {
+  background: #10b981;
+  margin-top: 10px;
+}
+#mapa {
+  height: 280px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+  z-index: 1;
+}
+
+/* FIX: Permite rolar os resultados da barra de pesquisa no PC */
+.leaflet-control-geocoder-alternatives {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  background: var(--li-bg);
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border-left: 5px solid var(--primary);
+  position: relative;
+}
+.acoes-item {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.btn-rota {
+  padding: 6px 10px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+.btn-deletar {
+  padding: 6px 10px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: bold;
+}
