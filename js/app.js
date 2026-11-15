@@ -14,7 +14,7 @@ let coordDestino = null;
 let marcadorOrigem = null;
 let marcadorDestino = null;
 
-// 🌙 Sistema de Tema (Dark / Light Mode)
+// Sistema de Tema (Dark / Light Mode)
 if (localStorage.getItem("tema") === "dark") {
   document.body.classList.add("dark-mode");
   btnTema.textContent = "☀️ Tema";
@@ -26,7 +26,7 @@ btnTema.addEventListener("click", () => {
   btnTema.textContent = isDark ? "☀️ Tema" : "🌙 Tema";
 });
 
-// 1. Inicializar Mapa
+// Inicializar Mapa
 const mapa = L.map("mapa").setView([-11.175, -61.901], 13);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap"
@@ -119,7 +119,7 @@ mapa.on("click", (e) => {
   }
 });
 
-// 2. Conexão Online/Offline
+// Conexão Online/Offline
 function atualizarConexao() {
   statusConexao.textContent = navigator.onLine ? "🌐 Online" : "⚠️ Offline (Modo Local)";
   statusConexao.style.color = navigator.onLine ? "#d1fae5" : "#f87171";
@@ -179,7 +179,7 @@ function calcularDeslocamento(horarioStr, distanciaKm) {
   return { horarioSaida: `${h}:${m}`, minutosViagem };
 }
 
-// 3. Sistema de Alarme Inteligente (Verificação a cada 30 segundos)
+// Sistema de Alarme
 setInterval(() => {
   const dados = JSON.parse(localStorage.getItem("compromissos-mapa-v3")) || [];
   if (dados.length === 0) return;
@@ -202,7 +202,7 @@ setInterval(() => {
   });
 }, 30000);
 
-// 4. Gestão da Lista (Exclusão, Filtro e Renderização)
+// Gestão da Lista
 window.deletarCompromisso = function(index) {
   const dados = JSON.parse(localStorage.getItem("compromissos-mapa-v3")) || [];
   dados.splice(index, 1);
