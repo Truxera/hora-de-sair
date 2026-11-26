@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="Hora de Sair: calcula a hora certa de sair de casa para chegar pontualmente aos seus compromissos.">
+  <title>Hora de Sair</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/imagens/icone.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="lib/leaflet/leaflet.css">
+  <link rel="stylesheet" href="lib/geocoder/Control.Geocoder.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <div class="topo-linha">
+      <h1>⏰ Hora de Sair</h1>
+      <button type="button" id="btn-tema" class="btn-tema" aria-pressed="false">🌙 Tema escuro</button>
+    </div>
+    <p id="status-conexao" class="conexao" role="status">Verificando rede…</p>
+  </header>
+
+  <nav class="menu" aria-label="Navegação principal">
+    <a href="#/inicio" data-rota="inicio"><span aria-hidden="true">🏠</span> Início</a>
+    <a href="#/novo" data-rota="novo"><span aria-hidden="true">➕</span> Novo</a>
+    <a href="#/compromissos" data-rota="compromissos"><span aria-hidden="true">📋</span> Lista</a>
+    <a href="#/sobre" data-rota="sobre"><span aria-hidden="true">ℹ️</span> Sobre</a>
+  </nav>
+
+  <main id="conteudo" tabindex="-1">
+
+    <!-- TELA 1: INÍCIO -->
+    <section data-tela="inicio" aria-labelledby="t-inicio" hidden>
+      <h2 id="t-inicio">Início</h2>
+      <p>Cadastre seus compromissos e descubra a hora exata de sair para não chegar atrasado.</p>
+      <div class="contadores">
+        <div><strong id="resumo-total">0</strong><span>cadastrados</span></div>
+        <div><strong id="resumo-pendentes">0</strong><span>futuros pendentes</span></div>
+      </div>
+      <h3 class="subtitulo">Próximo compromisso</h3>
+      <div id="proximo" class="cartao" aria-live="polite"></div>
+      <p><a class="btn" href="#/novo">➕ Novo compromisso</a></p>
+    </section>
+
+    <!-- TELA 2: AÇÃO PRINCIPAL (formulário) -->
+    <section data-tela="novo" aria-labelledby="t-novo" hidden>
+      <h2 id="t-novo">Novo compromisso</h2>
+      <p id="config-status" class="aviso config" role="status" hidden></p>
+      <p><button type="button" id="btn-recarregar-config" class="btn secundario" hidden>↻ Tentar carregar de novo</button></p>
+
+      <form id="form-compromisso" novalidate>
+        <div class="campo">
+          <label for="titulo">Compromisso <span class="obrig" aria-hidden="true">*</span></label>
+          <input type="text" id="titulo" name="titulo" required maxlength="80" autocomplete="off"
+                 placeholder="Ex.: Corte de cabelo" aria-describedby="erro-titulo">
+          <p class="erro" id="erro-titulo" role="alert" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="categoria">Categoria <span class="obrig" aria-hidden="true">*</span></label>
+          <select id="categoria" name="categoria" required aria-describedby="erro-categoria"></select>
+          <p class="erro" id="erro-categoria" role="alert" hidden></p>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label for="data">Data <span class="obrig" aria-hidden="true">*</span></label>
+            <input type="date" id="data" name="data" required aria-describedby="erro-data">
+            <p class="erro" id="erro-data" role="alert" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="horario">Horário <span class="obrig" aria-hidden="true">*</span></label>
+            <input type="time" id="horario" name="horario" required aria-describedby="erro-horario">
+            <p class="erro" id="erro-horario" role="alert" hidden></p>
+          </div>
+        </div>
+
+        <div class="linha">
+          <div class="campo">
+            <label for="transporte">Transporte <span class="obrig" aria-hidden="true">*</span></label>
+            <select id="transporte" name="transporte" required aria-describedby="erro-transporte"></select>
+            <p class="erro" id="erro-transporte" role="alert" hidden></p>
+          </div>
+          <div class="campo">
+            <label for="preparoMin">Preparo (min) <span class="obrig" aria-hidden="true">*</span></label>
+            <input type="number" id="preparoMin" name="preparoMin" min="0" max="240" step="1" inputmode="numeric"
+                   required aria-describedby="erro-preparoMin">
+            <p class="erro" id="erro-preparoMin" role="alert" hidden></p>
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Trajeto <span class="obrig" aria-hidden="true">*</span></legend>
+
+          <button type="button" id="btn-gps" class="btn">📍 Usar minha localização (GPS)</button>
+          <p class="ajuda">O GPS só é usado quando você clica no botão, e a posição não sai do seu aparelho.</p>
+
+          <div class="alternar" role="group" aria-label="O que o clique no mapa define">
+            <button type="button" id="btn-modo-origem" class="btn secundario" aria-pressed="true">Marcar origem</button>
+            <button type="button" id="btn-modo-destino" class="btn secundario" aria-pressed="false">Marcar destino</button>
+            <button type="button" id="btn-limpar-mapa" class="btn perigo">Limpar</button>
+          </div>
+
+          <div id="mapa" role="application" aria-label="Mapa para escolher origem e destino"></div>
+          <p id="aviso-mapa" class="aviso" hidden></p>
+
+          <p id="txt-origem" class="coord" aria-live="polite"></p>
+          <p class="erro" id="erro-origem" role="alert" hidden></p>
+          <p id="txt-destino" class="coord" aria-live="polite"></p>
+          <p class="erro" id="erro-destino" role="alert" hidden></p>
+        </fieldset>
+
+        <p id="previa" class="previa" aria-live="polite" hidden></p>
+
+        <div class="acoes">
+          <button type="submit" class="btn sucesso">💾 Salvar compromisso</button>
+          <button type="button" id="btn-limpar-form" class="btn secundario">Limpar formulário</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- TELA 3: LISTAGEM / ACOMPANHAMENTO -->
+    <section data-tela="compromissos" aria-labelledby="t-lista" hidden>
+      <h2 id="t-lista">Meus compromissos</h2>
+
+      <div class="filtros">
+        <div class="campo">
+          <label for="busca">Buscar</label>
+          <input type="search" id="busca" placeholder="Nome ou destino…" autocomplete="off">
+        </div>
+        <div class="campo">
+          <label for="filtro-status">Situação</label>
+          <select id="filtro-status">
+            <option value="todos">Todos</option>
+            <option value="pendentes">Pendentes</option>
+            <option value="concluidos">Concluídos</option>
+          </select>
+        </div>
+      </div>
+
+      <ul id="lista-compromissos" class="lista" aria-live="polite"></ul>
+      <p id="lista-vazia" class="vazio"></p>
+
+      <p><button type="button" id="btn-apagar-todos" class="btn perigo">🗑️ Apagar todos</button></p>
+    </section>
+
+    <!-- TELA 4: SOBRE -->
+    <section data-tela="sobre" aria-labelledby="t-sobre" hidden>
+      <h2 id="t-sobre">Sobre o projeto</h2>
+      <p><strong>Hora de Sair</strong> é um trabalho acadêmico da disciplina de Introdução ao Desenvolvimento
+        para Dispositivos Móveis (Prof. Romário Vitorino Ferreira).</p>
+      <h3 class="subtitulo">Problema</h3>
+      <p>Pessoas chegam atrasadas porque não somam o tempo de deslocamento e de preparo antes de um compromisso.</p>
+      <h3 class="subtitulo">Integrantes</h3>
+      <ul class="simples">
+        <li>Renan de Lima Souza</li>
+        <li>Hilion de Paula Hermsdorf</li>
+        <li>Luiz Gabriel Alves da Silva</li>
+      </ul>
+      <h3 class="subtitulo">Privacidade e uso acadêmico</h3>
+      <p>Os compromissos e a localização ficam <strong>apenas neste aparelho</strong> (localStorage).
+        A busca de lugares envia o texto digitado ao serviço Nominatim e o mapa baixa imagens do OpenStreetMap quando há conexão.
+        Os tempos são <strong>estimativas</strong> (distância em linha reta × fator de rota ÷ velocidade média); não consideram trânsito real.</p>
+      <h3 class="subtitulo">Modo offline</h3>
+      <p id="status-sw" role="status">Verificando…</p>
+      <h3 class="subtitulo">Créditos</h3>
+      <p>Mapas © colaboradores do <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>.
+        Bibliotecas: Leaflet (BSD-2) e Leaflet Control Geocoder (BSD-2).</p>
+    </section>
+
+  </main>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="lib/leaflet/leaflet.js"></script>
+  <script src="lib/geocoder/Control.Geocoder.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

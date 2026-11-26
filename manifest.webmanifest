@@ -1,0 +1,14 @@
+{
+  "name": "Hora de Sair",
+  "short_name": "Hora de Sair",
+  "description": "Alerta inteligente de deslocamento: descubra a hora certa de sair.",
+  "lang": "pt-BR",
+  "start_url": "./index.html#/inicio",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fb",
+  "theme_color": "#4f46e5",
+  "icons": [
+    { "src": "assets/imagens/icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
