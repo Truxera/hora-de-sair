@@ -56,3 +56,5 @@ hora-de-sair/
 | Renan de Lima Souza | `index.html`, `css/style.css`, responsividade, acessibilidade, tema |
 | Hilion de Paula Hermsdorf | `estado.js`, `validacao.js`, `armazenamento.js`, `calculo.js`, testes |
 | Luiz Gabriel Alves da Silva | `mapa.js`, `dispositivo.js`, `service-worker.js`, `manifest`, offline |
+
+link do page: https://truxera.github.io/hora-de-sair/#/inicio
