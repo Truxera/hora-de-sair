@@ -1,0 +1,14 @@
+{
+  "appNome": "Hora de Sair",
+  "versao": "1.0.0",
+  "velocidadeMediaKmH": 30,
+  "margemPreparacaoMin": 10,
+  "intervaloAlarmeMs": 30000,
+  "mensagemOffline": "Modo local: seus compromissos continuam disponíveis neste aparelho.",
+  "exemplosTitulo": [
+    "Consulta médica",
+    "Cabeleireiro",
+    "Reunião de trabalho",
+    "Aula na faculdade"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "versao": 1,
+  "descricao": "Dados iniciais e parâmetros do Hora de Sair (carregados via fetch). Valores fictícios/estimados para fins acadêmicos.",
+  "centroPadrao": { "lat": -10.8853, "lng": -61.9517, "zoom": 13 },
+  "fatorRota": 1.3,
+  "preparoPadraoMin": 10,
+  "categorias": [
+    { "id": "saude", "nome": "Consulta ou exame" },
+    { "id": "estudo", "nome": "Aula ou estudo" },
+    { "id": "trabalho", "nome": "Trabalho ou reunião" },
+    { "id": "servico", "nome": "Serviço pessoal (cabeleireiro, banco…)" },
+    { "id": "lazer", "nome": "Lazer ou evento" },
+    { "id": "outro", "nome": "Outro" }
+  ],
+  "transportes": [
+    { "id": "carro", "nome": "Carro", "velocidadeKmH": 30 },
+    { "id": "moto", "nome": "Moto", "velocidadeKmH": 35 },
+    { "id": "onibus", "nome": "Ônibus", "velocidadeKmH": 20 },
+    { "id": "bicicleta", "nome": "Bicicleta", "velocidadeKmH": 15 },
+    { "id": "a-pe", "nome": "A pé", "velocidadeKmH": 5 }
+  ]
+}
